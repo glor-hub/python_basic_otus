@@ -5,15 +5,13 @@
 
 
 def power_numbers(*args):
-    l=[num**2 for num in args]
-    return l
     """
     функция, которая принимает N целых чисел,
     и возвращает список квадратов этих чисел
     >>> power_numbers(1, 2, 5, 7)
     <<< [1, 4, 25, 49]
     """
-
+    return [num**2 for num in args]
 
 # filter types
 ODD = "odd"
@@ -33,15 +31,7 @@ def is_prime(num):
     else:
         return False
 
-def filter_numbers(l,type):
-    if type==ODD:
-        list_fltr=list(filter((lambda x: x % 2 == 1),l))
-    if type==EVEN:
-        list_fltr=list(filter((lambda x: x % 2 == 0),l))
-    if type==PRIME:
-        list_fltr=list(filter((lambda x: is_prime(x)),l))
-    return list_fltr
-
+def filter_numbers(list_numbers,filter_type):
     """
     функция, которая на вход принимает список из целых чисел,
     и возвращает только чётные/нечётные/простые числа
@@ -52,3 +42,10 @@ def filter_numbers(l,type):
     >>> filter_numbers([2, 3, 4, 5], EVEN)
     <<< [2, 4]
     """
+    if filter_type==ODD:
+        filter_list=list(filter((lambda x: x % 2 == 1),list_numbers))
+    if filter_type==EVEN:
+        filter_list=list(filter((lambda x: x % 2 == 0),list_numbers))
+    if filter_type==PRIME:
+        filter_list=list(filter(is_prime,list_numbers))
+    return filter_list
