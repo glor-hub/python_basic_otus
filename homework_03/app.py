@@ -11,7 +11,7 @@ def read_root(name: str):
     return {"message": f"Hello, {name}!"}
 
 
-@app.get("/ping", status_code=200)
+@app.get("/ping/", status_code=200)
 def ping_view():
     return {"message": "pong"}
 
