@@ -13,13 +13,26 @@
 - закрытие соединения с БД
 """
 
+import asyncio
+
+from homework_04.models import (
+    engine,
+    Base,
+    Session,
+)
+
+async def create_schemas():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
+
 
 async def async_main():
-    pass
+    await create_schemas()
 
 
 def main():
-    pass
+    asyncio.run(async_main())
 
 
 if __name__ == "__main__":
