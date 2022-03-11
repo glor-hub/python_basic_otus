@@ -18,21 +18,6 @@ NUM_USERS = 5
 USERS_DATA_URL = "https://jsonplaceholder.typicode.com/users"
 POSTS_DATA_URL = "https://jsonplaceholder.typicode.com/posts"
 
-
-# @dataclass
-# class Request:
-#     name: str
-#     url: str
-#     resp_field: str
-#     num: int
-
-
-# REQUESTS = [
-#     Request("users_request", USERS_DATA_URL, "id", NUM_USERS),
-#     Request("posts_request", POSTS_DATA_URL, "username", NUM_USERS),
-# ]
-
-
 async def fetch_json(session: ClientSession, url: str) -> dict:
     async with session.get(url) as response:  # : ClientResponse
         if response.status == HTTPStatus.OK:
@@ -53,7 +38,6 @@ async def fetch_user_by_user_id(userId: int) -> User:
         username=username,
         email=email
     )
-    # print(user)
     return user
 
 
@@ -61,9 +45,7 @@ async def fetch_posts_for_user(userId: int) -> List:
     posts_for_user = []
     async with ClientSession() as session:
         posts_json = list(await fetch_json(session, POSTS_DATA_URL + "?" + "userId=" + str(userId)))
-    # print(posts_json)
     for post_json in posts_json:
-        # print(post_json)
         id = post_json.get("id", 0)
         user_id = post_json.get("userId", 0)
         title = post_json.get("title", "")
@@ -93,7 +75,6 @@ async def get_data() -> (List[dict], List[dict]):
         fetch_posts_data()
     )
     print(type(users_data))
-    #
     print(users_data)
     print(posts_data)
     return users_data, posts_data
