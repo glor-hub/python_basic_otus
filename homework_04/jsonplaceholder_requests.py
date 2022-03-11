@@ -1,6 +1,102 @@
 """
 создайте асинхронные функции для выполнения запросов к ресурсам (используйте aiohttp)
 """
+import asyncio
+from http import HTTPStatus
 
-USERS_DATA_URL = ""
-POSTS_DATA_URL = ""
+from aiohttp import ClientSession, ClientResponse
+
+from homework_04.models import (
+    User,
+    Post,
+)
+
+from typing import List
+
+NUM_USERS = 5
+
+USERS_DATA_URL = "https://jsonplaceholder.typicode.com/users"
+POSTS_DATA_URL = "https://jsonplaceholder.typicode.com/posts"
+
+
+# @dataclass
+# class Request:
+#     name: str
+#     url: str
+#     resp_field: str
+#     num: int
+
+
+# REQUESTS = [
+#     Request("users_request", USERS_DATA_URL, "id", NUM_USERS),
+#     Request("posts_request", POSTS_DATA_URL, "username", NUM_USERS),
+# ]
+
+
+async def fetch_json(session: ClientSession, url: str) -> dict:
+    async with session.get(url) as response:  # : ClientResponse
+        if response.status == HTTPStatus.OK:
+            response_json = await response.json()
+            return response_json
+
+
+async def fetch_user_by_user_id(userId: int) -> User:
+    async with ClientSession() as session:
+        user_json = await fetch_json(session, USERS_DATA_URL + "/" + str(userId))
+    id = user_json.get("id", 0)
+    name = user_json.get("name", "")
+    username = user_json.get("username", "")
+    email = user_json.get("email", "")
+    user = User(
+        id=id,
+        name=name,
+        username=username,
+        email=email
+    )
+    # print(user)
+    return user
+
+
+async def fetch_posts_for_user(userId: int) -> List:
+    posts_for_user = []
+    async with ClientSession() as session:
+        posts_json = list(await fetch_json(session, POSTS_DATA_URL + "?" + "userId=" + str(userId)))
+    # print(posts_json)
+    for post_json in posts_json:
+        # print(post_json)
+        id = post_json.get("id", 0)
+        user_id = post_json.get("userId", 0)
+        title = post_json.get("title", "")
+        body = post_json.get("body", "")
+        post = Post(
+            id=id,
+            user_id=user_id,
+            title=title,
+            body=body
+        )
+        posts_for_user.append(post)
+    return posts_for_user
+
+
+async def fetch_users_data():
+    return [await fetch_user_by_user_id(user_id)
+             for user_id in range(1, NUM_USERS + 1)]
+
+
+async def fetch_posts_data():
+    return [await fetch_posts_for_user(user_id)
+             for user_id in range(1, NUM_USERS + 1)]
+
+async def get_data() -> (List[dict], List[dict]):
+    users_data, posts_data = await asyncio.gather(
+        fetch_users_data(),
+        fetch_posts_data()
+    )
+    print(type(users_data))
+    #
+    print(users_data)
+    print(posts_data)
+    return users_data, posts_data
+
+if __name__ == '__main__':
+    asyncio.run(get_data())

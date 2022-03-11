@@ -86,6 +86,14 @@ class User(TimestampMixin, Base):
 
     posts = relationship("Post", back_populates="user")
 
+    def __str__(self):
+        return f"{self.__class__.__name__}(" \
+               f"id={self.id},\n " \
+               f"user_name={self.username!r},\n " \
+               f"name={self.name},\n " \
+               f"email={self.email},\n " \
+               f"created_at={self.created_at!r})\n"
+
 
 class Post(TimestampMixin, Base):
     title = Column(
@@ -112,7 +120,7 @@ class Post(TimestampMixin, Base):
 
     def __str__(self):
         return f"{self.__class__.__name__}(" \
-               f"id={self.id}, " \
-               f"title={self.title!r}, " \
-               f"user_id={self.author_id}, " \
-               f"created_at={self.created_at!r})"
+               f"id={self.id},\n " \
+               f"title={self.title!r},\n " \
+               f"user_id={self.user_id},\n " \
+               f"created_at={self.created_at!r})\n"
