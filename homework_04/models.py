@@ -50,7 +50,7 @@ class Base:
 
 engine = create_async_engine(PG_CONN_URI, echo=PG_ECHO)
 
-Session = sessionmaker(engine, class_=AsyncSession,expire_on_commit=False)
+Session = sessionmaker(engine, expire_on_commit=False,class_=AsyncSession)
 
 Base = declarative_base(bind=engine, cls=Base)
 

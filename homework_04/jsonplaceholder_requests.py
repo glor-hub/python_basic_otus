@@ -13,7 +13,8 @@ from homework_04.models import (
 
 from typing import List
 
-NUM_USERS = 5
+
+NUM_USERS = 10
 
 USERS_DATA_URL = "https://jsonplaceholder.typicode.com/users"
 POSTS_DATA_URL = "https://jsonplaceholder.typicode.com/posts"
@@ -28,7 +29,7 @@ async def fetch_json(session: ClientSession, url: str) -> dict:
 async def fetch_user_by_user_id(userId: int) -> User:
     async with ClientSession() as session:
         user_json = await fetch_json(session, USERS_DATA_URL + "/" + str(userId))
-    id = user_json.get("id", 0)
+    id = user_json.get("id", 1)
     name = user_json.get("name", "")
     username = user_json.get("username", "")
     email = user_json.get("email", "")
@@ -59,7 +60,6 @@ async def fetch_posts_for_user(userId: int) -> List:
         posts_for_user.append(post)
     return posts_for_user
 
-
 async def fetch_users_data():
     return [await fetch_user_by_user_id(user_id)
              for user_id in range(1, NUM_USERS + 1)]
@@ -69,14 +69,11 @@ async def fetch_posts_data():
     return [await fetch_posts_for_user(user_id)
              for user_id in range(1, NUM_USERS + 1)]
 
-async def get_data() -> (List[dict], List[dict]):
+async def get_data():
     users_data, posts_data = await asyncio.gather(
         fetch_users_data(),
         fetch_posts_data()
     )
-    print(type(users_data))
-    print(users_data)
-    print(posts_data)
     return users_data, posts_data
 
 if __name__ == '__main__':

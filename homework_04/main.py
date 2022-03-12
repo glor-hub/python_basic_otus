@@ -20,20 +20,35 @@ from homework_04.models import (
     Base,
     Session,
 )
+from homework_04.jsonplaceholder_requests import get_data, NUM_USERS
+
 
 async def create_schemas():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
 
+async def create_users(users_data):
+    async with Session() as session:
+        print(users_data)
+        session.add_all(users_data)
+        await session.commit()
+
+async def create_posts(posts_data):
+    async with Session() as session:
+        for user_id in range(1, NUM_USERS + 1):
+            session.add_all(posts_data[user_id-1])
+        await session.commit()
 
 async def async_main():
     await create_schemas()
-
+    users_data, posts_data = await get_data()
+    await create_users(users_data)
+    await create_posts(posts_data)
 
 def main():
-    asyncio.run(async_main())
 
+    asyncio.run(async_main())
 
 if __name__ == "__main__":
     main()
