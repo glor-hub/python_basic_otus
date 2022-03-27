@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block ul_body %}
+    <ul>
+      {% for (sign_id, sign_name) in signs %}
+        <li>
+            {{ sign_name }}
+        </li>
+      {% endfor %}
+</ul>
+{% endblock %}
