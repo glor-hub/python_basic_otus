@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% from "macros/back_to_horoscopes_list.html" import back_to_horoscopes_list %}
+
+{% block title %}
+    Horoscope #{{ horoscope.id }}
+{% endblock %}
+
+{% block body %}
+    <h2>Horoscope #{{ horoscope.id }} details:</h2>{{ horoscope.name }}
+    <div>
+    Created {{ horoscope.created_at}}
+  </div>
+    <div>
+    Description {{ horoscope.desc }}
+     </div>
+{{back_to_horoscopes_list()}}
+{% endblock %}

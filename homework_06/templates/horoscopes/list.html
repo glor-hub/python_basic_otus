@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Horoscope list
+{% endblock %}
+
+{% block body %}
+    <h1>Horoscope:</h1>
+    {% if horoscopes %}
+        <ul>
+            {% for horoscope in horoscopes %}
+                <li><a
+                        href="{{ url_for('horoscopes_app.horoscope_details', horoscope_id=horoscope.id) }}"
+                >{{ horoscope.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>No horoscopes yet.</h3>
+    {% endif %}
+
+    <div>
+        <a href="{{ url_for('horoscopes_app.add') }}">Add horoscope</a>
+    </div>
+
+{% endblock %}
