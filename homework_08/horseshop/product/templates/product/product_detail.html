@@ -1,0 +1,10 @@
+{% extends 'product/base.html' %}
+{% block title %} Product detail
+{% endblock %}
+{% block main_content %}
+    <p>
+        {{ object }}
+    </p>
+    <a href="{% url 'product_list' %}">to products list </a>
+
+{% endblock %}

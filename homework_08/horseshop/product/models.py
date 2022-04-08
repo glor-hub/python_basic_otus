@@ -1,5 +1,6 @@
 from django.db import models
 
+# Create your models here.
 from category.models import Subcategory
 from order.models import Order
 
