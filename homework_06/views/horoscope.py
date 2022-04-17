@@ -26,7 +26,7 @@ def navbar():
     return render_template("base.html")
 
 
-@horoscopes_app.get("horoscopes/", endpoint="horoscopes_list")
+@horoscopes_app.get("/horoscopes/", endpoint="horoscopes_list")
 def list_horoscopes():
     horoscopes: List[Horoscope] = Horoscope.query.all()
     return render_template("horoscopes/list.html", horoscopes=horoscopes)
