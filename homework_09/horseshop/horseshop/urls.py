@@ -21,12 +21,11 @@ from horseshop.settings import DEBUG
 import product.views as product
 
 urlpatterns = [
-    path('', product.index,  name='home'),
-    path('product/detail/<int:pk>/', product.ProductDetailView.as_view(), name='product_detail'),
-    path('product/list/', product.ProductsListView.as_view(), name='product_list'),
+                  path('', product.index, name='home'),
+                  path('product/', include('product.urls', namespace='product')),
+                  path('admin/', admin.site.urls),
 
-    path('admin/', admin.site.urls),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
 if DEBUG:
-    urlpatterns += path('__debug__/', include('debug_toolbar.urls')), 
-    
+    urlpatterns += path('__debug__/', include('debug_toolbar.urls')),
