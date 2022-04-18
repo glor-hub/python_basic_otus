@@ -23,6 +23,7 @@ import product.views as product
 urlpatterns = [
                   path('', product.index, name='home'),
                   path('product/', include('product.urls', namespace='product')),
+                  path('shopauth/', include('shopauth.urls', namespace='shopauth')),
                   path('admin/', admin.site.urls),
 
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
