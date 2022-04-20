@@ -21,7 +21,7 @@
 
 {% block menu %}
     <ul>
-        <li><a href="{% url 'shopauth:register' %}">user register</a></li>
+        <li><a href="{% url 'shopauth:register' %}">user registration</a></li>
         <li>
             {% if user.is_anonymous %}
                 <a href="{% url 'shopauth:login' %}">login</a>
