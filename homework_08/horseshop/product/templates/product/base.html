@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static%}
+<link rel="stylesheet" href="static/product/css/bootstrap.css"
+       type="text/css">
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+
+</head>
+
+<body>
+
+{% block menu %}
+    <ul>
+        <li><a href="{% url 'home' %}">home page</a></li>
+    </ul>
+{% endblock %}
+
+{% block main_content %}
+
+{% endblock %}
+
+</body>
+</html>
