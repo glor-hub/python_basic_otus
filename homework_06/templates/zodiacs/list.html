@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block ul_body %}
+    <ul>
+      {% for zodiac in zodiacs %}
+        <li>
+            {{ zodiac.name }}
+        </li>
+      {% endfor %}
+</ul>
+{% endblock %}

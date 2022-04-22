@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% from 'macros/back_to_horoscopes_list.html' import back_to_horoscopes_list %}
+
+{% block title %}
+    Add Horoscope
+{% endblock %}
+
+{% block body %}
+    <form method="post" class="my-4">
+        {{ form.hidden_tag() }}
+
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(size=100, class="form-control") }}
+
+        {% if form.errors %}
+            <ul class="alert alert-danger">
+                {% for field_name, values in form.errors.items() %}
+                    <li>
+                        <strong>{{ field_name }}</strong>
+                        <ul>
+                            {% for error_text in values %}
+                                <li>{{ error_text }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {#        <label#}
+        {#                for="input-horoscope-name-id" class="form-control">#}
+        {#            Product name:#}
+        {#        </label>#}
+        {#        <input#}
+        {#                "#}
+        {#                type="text"#}
+        {#                id="input-horoscope-name-id"#}
+        {#                name="horoscope-name"#}
+        {#                required#}
+        {#        >#}
+        {#        <input#}
+        {#                class="form-check-input"#}
+        {#                type="checkbox"#}
+        {#                value="on"#}
+        {#                name="is-new"#}
+        {#                id="horoscope-check-new-checkbox">#}
+        {#        <label class="form-check-label" for="horoscope-check-new-checkbox">#}
+        {#            Is new?#}
+        {#        </label>#}
+        <button class="btn btn-primary" type="submit">
+            Add horoscope
+        </button>
+    </form>
+
+    {{ back_to_horoscopes_list() }}
+{% endblock %}
