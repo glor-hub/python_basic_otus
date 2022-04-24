@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="{% static 'product/css/bootstrap.css' %}">
+
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+
+</head>
+
+<body>
+
+{% block main_content %}
+
+{% endblock %}
+
+{% block menu %}
+    <ul>
+        <li><a href="{% url 'shopauth:register' %}">user registration</a></li>
+        <li>
+            {% if user.is_anonymous %}
+                <a href="{% url 'shopauth:login' %}">login</a>
+            {% else %}
+                <a href="{% url 'shopauth:logout' %}">logout</a>
+                <br>
+                <br>
+{% block product_list %}
+                <a href="{% url 'product:list' %}">to products list </a>
+ {% endblock %}
+            {% endif %}
+        </li>
+    </ul>
+{% endblock %}
+
+</body>
+</html>
